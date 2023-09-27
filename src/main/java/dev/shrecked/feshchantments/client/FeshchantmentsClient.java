@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class FeshchantmentsClient implements ClientModInitializer {
