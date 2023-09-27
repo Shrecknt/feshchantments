@@ -13,6 +13,7 @@ public class FeshchantmentsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(Feshchantments.UPDATE_ENCHANTMENTS, (client, handler, buf, responseSender) -> {
+            System.out.println("Received packet: " + buf.toString());
             Map<String, Integer> enchants = buf.readMap(PacketByteBuf::readString, PacketByteBuf::readInt);
             System.out.println("Enchants: " + enchants.toString());
 

@@ -15,7 +15,7 @@ public class Feshchantments implements ModInitializer {
     @Override
     public void onInitialize() {
         ServerPlayConnectionEvents.JOIN.register((networkHandler, packetSender, server) -> {
-            ServerPlayerEntity player = networkHandler.player;
+            ServerPlayerEntity player = networkHandler.getPlayer();
 
             FeshchantmentsState serverState = FeshchantmentsState.getServerState(server);
             PlayerData playerState = FeshchantmentsState.getPlayerState(player);
@@ -29,11 +29,10 @@ public class Feshchantments implements ModInitializer {
             );
 
             System.out.println("Sending enchants: " + playerState.enchants.toString());
+            System.out.println("UUID: " + player.getUuid().toString());
 
-            ServerPlayerEntity playerEntity = server.getPlayerManager().getPlayer(player.getUuid());
             server.execute(() -> {
-                if (playerEntity == null) return;
-                ServerPlayNetworking.send(playerEntity, UPDATE_ENCHANTMENTS, data);
+                ServerPlayNetworking.send(player, UPDATE_ENCHANTMENTS, data);
             });
         });
     }
