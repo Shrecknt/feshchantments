@@ -1,13 +1,25 @@
 package dev.shrecked.feshchantments.client;
 
+import dev.shrecked.feshchantments.Feshchantments;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FeshchantmentsClient implements ClientModInitializer {
-    /**
-     * Runs the mod initializer on the client environment.
-     */
     @Override
     public void onInitializeClient() {
+        ClientPlayNetworking.registerGlobalReceiver(Feshchantments.UPDATE_ENCHANTMENTS, (client, handler, buf, responseSender) -> {
+            Map<String, Integer> enchants = buf.readMap(PacketByteBuf::readString, PacketByteBuf::readInt);
+            System.out.println("Enchants: " + enchants.toString());
 
+            client.execute(() -> {
+                if (client.player == null) return;
+                client.player.sendMessage(Text.literal("Enchants: " + enchants.toString()));
+            });
+        });
     }
 }
