@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "feshchantments",
+  "version": "${version}",
+  "name": "feshchantments",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/cjtie/feshchantments"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/feshchantments/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.shrecked.feshchantments.client.FeshchantmentsClient"
+    ],
+    "main": [
+      "dev.shrecked.feshchantments.Feshchantments"
+    ]
+  },
+  "mixins": [
+    "feshchantments.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
