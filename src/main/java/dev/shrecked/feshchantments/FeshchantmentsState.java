@@ -71,10 +71,14 @@ public class FeshchantmentsState extends PersistentState {
     }
 
     public static PlayerData getPlayerState(LivingEntity player) {
-        FeshchantmentsState serverState = getServerState(player.getWorld().getServer());
+        MinecraftServer server = player.getWorld().getServer();
+        assert server != null;
+        FeshchantmentsState serverState = getServerState(server);
+        return serverState.players.computeIfAbsent(player.getUuid(), uuid -> new PlayerData());
+    }
 
-        PlayerData playerState = serverState.players.computeIfAbsent(player.getUuid(), uuid -> new PlayerData());
-
-        return playerState;
+    public static PlayerData getPlayerState(LivingEntity player, MinecraftServer server) {
+        FeshchantmentsState serverState = getServerState(server);
+        return serverState.players.computeIfAbsent(player.getUuid(), uuid -> new PlayerData());
     }
 }

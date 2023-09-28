@@ -1,0 +1,6 @@
+{
+    "parent": "feshchantments:item/scroll",
+    "textures": {
+        "icon": "feshchantments:item/quick_charge"
+    }
+}

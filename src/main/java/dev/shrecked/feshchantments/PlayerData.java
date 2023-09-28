@@ -4,5 +4,5 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerData {
-    Map<String, Integer> enchants = new HashMap<>();
+    public Map<String, Integer> enchants = new HashMap<>();
 }

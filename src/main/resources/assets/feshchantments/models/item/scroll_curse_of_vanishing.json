@@ -1,0 +1,6 @@
+{
+    "parent": "feshchantments:item/scroll",
+    "textures": {
+        "icon": "feshchantments:item/curse_of_vanishing"
+    }
+}
