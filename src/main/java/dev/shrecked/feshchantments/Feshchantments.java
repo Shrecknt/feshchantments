@@ -1,5 +1,6 @@
 package dev.shrecked.feshchantments;
 
+import dev.shrecked.feshchantments.items.ForgetScrollItem;
 import dev.shrecked.feshchantments.items.ScrollItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -33,6 +34,8 @@ public class Feshchantments implements ModInitializer {
 
     public static final ScrollItem SCROLL_ITEM
             = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "scroll"), new ScrollItem(new FabricItemSettings()));
+    public static final ForgetScrollItem FORGET_SCROLL_ITEM
+            = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "scroll_forget"), new ForgetScrollItem(new FabricItemSettings()));
 
     public static final ItemGroup ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "feshchantments_group"),
         FabricItemGroup.builder()
@@ -45,6 +48,7 @@ public class Feshchantments implements ModInitializer {
     public void onInitialize() {
         // this is bad. do not do this. I only did this because I do not know how to do it correctly.
         List<Item> scrollItemList = new ArrayList<>();
+        scrollItemList.add(FORGET_SCROLL_ITEM);
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             String name = getEnchantName(enchant);
             ScrollItem item

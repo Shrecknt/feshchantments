@@ -4,7 +4,6 @@ import dev.shrecked.feshchantments.FeshchantmentsState;
 import dev.shrecked.feshchantments.PlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
@@ -19,36 +18,25 @@ import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
 import static dev.shrecked.feshchantments.Feshchantments.UPDATE_ENCHANTMENTS;
-import static dev.shrecked.feshchantments.Feshchantments.getEnchantName;
-import static dev.shrecked.feshchantments.client.FeshchantmentsClient.ENCHANTMENTS_MAP;
 
-public class ScrollItem extends Item {
-    @Nullable
-    public Enchantment enchantment;
-
-    public ScrollItem(Item.Settings settings) {
+public class ForgetScrollItem extends Item {
+    public ForgetScrollItem(Item.Settings settings) {
         super(settings
-            .maxCount(1)
-            .rarity(Rarity.EPIC)
-            .food(new FoodComponent(
-                0,
-                0,
-                false,
-                true,
-                false,
-                new ArrayList<>()
-            ))
+                .maxCount(1)
+                .rarity(Rarity.EPIC)
+                .food(new FoodComponent(
+                        0,
+                        0,
+                        false,
+                        true,
+                        false,
+                        new ArrayList<>()
+                ))
         );
-    }
-
-    public ScrollItem(Item.Settings settings, @Nullable Enchantment enchantment) {
-        this(settings);
-        this.enchantment = enchantment;
     }
 
     @Override
@@ -59,31 +47,12 @@ public class ScrollItem extends Item {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity player) {
-        if (this.enchantment != null && player instanceof PlayerEntity) {
-            String enchantName = getEnchantName(this.enchantment);
-            int enchantLevel = ENCHANTMENTS_MAP.getOrDefault(enchantName, 0);
-            if (enchantLevel >= this.enchantment.getMaxLevel()) {
-                player.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 1.0F, 1.0F);
-                return stack;
-            }
-        }
-
-        if (this.enchantment != null && player instanceof ServerPlayerEntity player1) {
+        if (player instanceof ServerPlayerEntity player1) {
             MinecraftServer server = world.getServer();
             assert server != null;
             PlayerData playerState = FeshchantmentsState.getPlayerState(player, server);
 
-            String enchantName = getEnchantName(this.enchantment);
-            System.out.println("FINISHED USING: " + enchantName);
-
-            int enchantLevel = playerState.enchants.getOrDefault(enchantName, 0);
-
-            if (enchantLevel >= this.enchantment.getMaxLevel()) {
-                player.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 1.0F, 1.0F);
-                return stack;
-            }
-
-            playerState.enchants.put(enchantName, enchantLevel + 1);
+            playerState.enchants.clear();
 
             PacketByteBuf data = PacketByteBufs.create();
             data.writeMap(
@@ -96,7 +65,7 @@ public class ScrollItem extends Item {
             server.execute(() -> ServerPlayNetworking.send(player1, UPDATE_ENCHANTMENTS, data));
         }
 
-        player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+        player.playSound(SoundEvents.BLOCK_END_PORTAL_SPAWN, 1.0F, 1.0F);
         if (!(player instanceof PlayerEntity) || !((PlayerEntity)player).getAbilities().creativeMode) {
             stack.decrement(1);
         }
