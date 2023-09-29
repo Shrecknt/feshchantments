@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
@@ -15,7 +16,6 @@ import java.util.UUID;
 
 public class FeshchantmentsState extends PersistentState {
     public Map<UUID, PlayerData> players = new HashMap<>();
-
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
@@ -53,7 +53,9 @@ public class FeshchantmentsState extends PersistentState {
     }
 
     public static FeshchantmentsState getServerState(MinecraftServer server) {
-        PersistentStateManager persistentStateManager = server.getWorld(World.OVERWORLD).getPersistentStateManager();
+        ServerWorld world = server.getWorld(World.OVERWORLD);
+        assert world != null;
+        PersistentStateManager persistentStateManager = world.getPersistentStateManager();
 
         Type<FeshchantmentsState> type = new Type<>(
                 FeshchantmentsState::new,
@@ -66,7 +68,6 @@ public class FeshchantmentsState extends PersistentState {
         );
 
         state.markDirty();
-
         return state;
     }
 

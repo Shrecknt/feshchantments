@@ -13,6 +13,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
@@ -61,8 +62,8 @@ public class ForgetScrollItem extends Item {
                     PacketByteBuf::writeInt
             );
 
-            System.out.println("Sending enchants: " + playerState.enchants.toString());
             server.execute(() -> ServerPlayNetworking.send(player1, UPDATE_ENCHANTMENTS, data));
+            player1.sendMessage(Text.literal("§cEnchantments cleared"), true);
         }
 
         player.playSound(SoundEvents.BLOCK_END_PORTAL_SPAWN, 1.0F, 1.0F);

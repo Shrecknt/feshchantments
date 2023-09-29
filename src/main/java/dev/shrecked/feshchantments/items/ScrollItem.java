@@ -14,6 +14,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
@@ -59,11 +60,12 @@ public class ScrollItem extends Item {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity player) {
-        if (this.enchantment != null && player instanceof PlayerEntity) {
+        if (this.enchantment != null && player instanceof PlayerEntity player1) {
             String enchantName = getEnchantName(this.enchantment);
             int enchantLevel = ENCHANTMENTS_MAP.getOrDefault(enchantName, 0);
             if (enchantLevel >= this.enchantment.getMaxLevel()) {
                 player.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 1.0F, 1.0F);
+                player1.sendMessage(Text.literal("§cThe enchantment §r" + enchantName.replace('_', ' ') + "§c is already at max level"), true);
                 return stack;
             }
         }
@@ -74,14 +76,13 @@ public class ScrollItem extends Item {
             PlayerData playerState = FeshchantmentsState.getPlayerState(player, server);
 
             String enchantName = getEnchantName(this.enchantment);
-            System.out.println("FINISHED USING: " + enchantName);
-
             int enchantLevel = playerState.enchants.getOrDefault(enchantName, 0);
 
             if (enchantLevel >= this.enchantment.getMaxLevel()) {
-                player.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 1.0F, 1.0F);
                 return stack;
             }
+
+            player1.sendMessage(Text.literal("§6Max level of §r" + enchantName.replace('_', ' ') + "§6 increased to " + (enchantLevel + 1)), true);
 
             playerState.enchants.put(enchantName, enchantLevel + 1);
 
@@ -92,7 +93,6 @@ public class ScrollItem extends Item {
                     PacketByteBuf::writeInt
             );
 
-            System.out.println("Sending enchants: " + playerState.enchants.toString());
             server.execute(() -> ServerPlayNetworking.send(player1, UPDATE_ENCHANTMENTS, data));
         }
 

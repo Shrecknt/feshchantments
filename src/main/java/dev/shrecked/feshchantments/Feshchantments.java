@@ -6,15 +6,17 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -22,15 +24,15 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class Feshchantments implements ModInitializer {
     public static final String MOD_ID = "feshchantments";
     public static final Identifier UPDATE_ENCHANTMENTS = new Identifier(MOD_ID, "update_enchantments");
+    public static Map<String, Item> CUSTOM_ITEM_MAP = new HashMap<>();
 
     public static final ScrollItem SCROLL_ITEM
             = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "scroll"), new ScrollItem(new FabricItemSettings()));
@@ -47,20 +49,19 @@ public class Feshchantments implements ModInitializer {
     @Override
     public void onInitialize() {
         // this is bad. do not do this. I only did this because I do not know how to do it correctly.
-        List<Item> scrollItemList = new ArrayList<>();
-        scrollItemList.add(FORGET_SCROLL_ITEM);
+        CUSTOM_ITEM_MAP.put("forget", FORGET_SCROLL_ITEM);
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             String name = getEnchantName(enchant);
             ScrollItem item
                     = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "scroll_" + name), new ScrollItem(new FabricItemSettings(), enchant));
-            scrollItemList.add(item);
+            CUSTOM_ITEM_MAP.put(name, item);
         }
 
         Optional<RegistryKey<ItemGroup>> ITEM_GROUP_KEY = Registries.ITEM_GROUP.getKey(ITEM_GROUP);
         if (ITEM_GROUP_KEY.isEmpty()) {
             throw new RuntimeException("something fucked up");
         }
-        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_KEY.get()).register(content -> scrollItemList.forEach(content::add));
+        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP_KEY.get()).register(content -> CUSTOM_ITEM_MAP.values().forEach(content::add));
 
         ServerPlayConnectionEvents.JOIN.register((networkHandler, packetSender, server) -> {
             ServerPlayerEntity player = networkHandler.getPlayer();
@@ -75,13 +76,25 @@ public class Feshchantments implements ModInitializer {
                     PacketByteBuf::writeInt
             );
 
-            System.out.println("Sending enchants: " + playerState.enchants.toString());
-
             server.execute(() -> ServerPlayNetworking.send(player, UPDATE_ENCHANTMENTS, data));
+        });
+
+        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (source.isBuiltin() && Blocks.COAL_ORE.getLootTableId().equals(id)) {
+                LootPool.Builder poolBuilder = LootPool.builder()
+                        .with(ItemEntry.builder(CUSTOM_ITEM_MAP.get("fire_aspect")));
+
+                tableBuilder.pool(poolBuilder);
+            }
         });
     }
 
     public static String getEnchantName(Enchantment enchant) {
-        return enchant.getName(0).getString().toLowerCase().replace(' ', '_').replace("_enchantment.level.0", "");
+        return enchant
+            .getName(0)
+            .getString()
+            .toLowerCase()
+            .replace(' ', '_')
+            .replace("_enchantment.level.0", "");
     }
 }
