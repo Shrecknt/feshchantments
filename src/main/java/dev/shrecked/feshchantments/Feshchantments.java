@@ -12,10 +12,17 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.condition.LootConditionType;
+import net.minecraft.loot.condition.LootConditionTypes;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
@@ -80,13 +87,33 @@ public class Feshchantments implements ModInitializer {
         });
 
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (source.isBuiltin() && Blocks.COAL_ORE.getLootTableId().equals(id)) {
-                LootPool.Builder poolBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(CUSTOM_ITEM_MAP.get("fire_aspect")));
-
-                tableBuilder.pool(poolBuilder);
-            }
+            if (!source.isBuiltin()) return;
+            modifyTable(tableBuilder, id, EntityType.WANDERING_TRADER.getLootTableId(), "projectile_protection", 1);
+            modifyTable(tableBuilder, id, LootTables.END_CITY_TREASURE_CHEST, "mending", 0.1);
         });
+    }
+
+    public static void modifyTable(LootTable.Builder tableBuilder, Identifier id, Identifier lootTable, String enchantName, double chance) {
+        if (lootTable.equals(id)) {
+            LootPool.Builder poolBuilder = LootPool.builder()
+                .with(ItemEntry.builder(CUSTOM_ITEM_MAP.get(enchantName)));
+
+            if (chance < 1) {
+                poolBuilder = poolBuilder.conditionally(new LootCondition() {
+                    @Override
+                    public LootConditionType getType() {
+                        return LootConditionTypes.RANDOM_CHANCE;
+                    }
+
+                    @Override
+                    public boolean test(LootContext lootContext) {
+                        return lootContext.getRandom().nextBetween(0, (int) (1 / chance) - 1) == 0;
+                    }
+                });
+            }
+
+            tableBuilder.pool(poolBuilder);
+        }
     }
 
     public static String getEnchantName(Enchantment enchant) {

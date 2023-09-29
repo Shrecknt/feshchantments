@@ -82,7 +82,7 @@ public class ScrollItem extends Item {
                 return stack;
             }
 
-            player1.sendMessage(Text.literal("§6Max level of §r" + enchantName.replace('_', ' ') + "§6 increased to " + (enchantLevel + 1)), true);
+            player1.sendMessage(Text.literal("§6Max level of §r" + enchantName.replace('_', ' ') + "§6 increased to §r" + (enchantLevel + 1)), true);
 
             playerState.enchants.put(enchantName, enchantLevel + 1);
 
