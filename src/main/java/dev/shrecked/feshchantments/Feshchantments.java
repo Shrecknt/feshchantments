@@ -94,8 +94,51 @@ public class Feshchantments implements ModInitializer {
 
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (!source.isBuiltin()) return;
-            modifyTable(tableBuilder, id, EntityType.WANDERING_TRADER.getLootTableId(), "projectile_protection", 1);
+
+            // Modify loot tables to add a chance for
+            // enchanted scrolls, chance is from 0 to
+            // 1 where 0 means impossible to obtain
+            // and 1 means guaranteed.
+
+            modifyTable(tableBuilder, id, LootTables.UNDERWATER_RUIN_SMALL_CHEST, "aqua_affinity", 0.3);
+            modifyTable(tableBuilder, id, EntityType.CAVE_SPIDER.getLootTableId(), "bane_of_arthropods", 0.005);
+            modifyTable(tableBuilder, id, EntityType.CREEPER.getLootTableId(), "blast_protection", 0.01);
+            modifyTable(tableBuilder, id, LootTables.UNDERWATER_RUIN_SMALL_CHEST, "channeling", 0.15);
+            modifyTable(tableBuilder, id, LootTables.PILLAGER_OUTPOST_CHEST, "curse_of_vanishing", 0.4);
+            modifyTable(tableBuilder, id, LootTables.PILLAGER_OUTPOST_CHEST, "curse_of_binding", 0.4);
+            modifyTable(tableBuilder, id, LootTables.UNDERWATER_RUIN_BIG_CHEST, "depth_strider", 0.2);
+            modifyTable(tableBuilder, id, LootTables.VILLAGE_MASON_CHEST, "efficiency", 0.3);
+            modifyTable(tableBuilder, id, LootTables.ANCIENT_CITY_ICE_BOX_CHEST, "feather_falling", 0.75);
+            modifyTable(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "fire_aspect", 0.03);
+            modifyTable(tableBuilder, id, EntityType.MAGMA_CUBE.getLootTableId(), "fire_protection", 0.05);
+            modifyTable(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "flame", 0.03);
+            // fortune
+            // frost walker
+            // impaling
+            // infinity
+            // knockback
+            // looting
+            // loyalty
+            // luck of the sea
+            // lure
             modifyTable(tableBuilder, id, LootTables.END_CITY_TREASURE_CHEST, "mending", 0.1);
+            // multishot
+            // piercing
+            // power
+            modifyTable(tableBuilder, id, EntityType.WANDERING_TRADER.getLootTableId(), "projectile_protection", 1);
+            // protection
+            // punch
+            // quick charge
+            // respiration
+            // riptide
+            // sharpness
+            // silk touch
+            // smite
+            // soul speed
+            // sweeping edge
+            // swift sneak
+            // thorns
+            modifyTable(tableBuilder, id, LootTables.VILLAGE_TOOLSMITH_CHEST, "unbreaking", 0.3);
         });
     }
 
