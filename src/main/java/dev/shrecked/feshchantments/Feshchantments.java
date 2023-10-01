@@ -29,6 +29,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -53,8 +54,13 @@ public class Feshchantments implements ModInitializer {
             .build()
     );
 
+    public static final Identifier WRITING_SOUND_ID = new Identifier("feshchantments:writing");
+    public static SoundEvent WRITING_SOUND_EVENT = SoundEvent.of(WRITING_SOUND_ID);
+
     @Override
     public void onInitialize() {
+        Registry.register(Registries.SOUND_EVENT, Feshchantments.WRITING_SOUND_ID, Feshchantments.WRITING_SOUND_EVENT);
+
         // this is bad. do not do this. I only did this because I do not know how to do it correctly.
         CUSTOM_ITEM_MAP.put("forget", FORGET_SCROLL_ITEM);
         for (Enchantment enchant : Registries.ENCHANTMENT) {

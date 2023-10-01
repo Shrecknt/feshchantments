@@ -1,9 +1,11 @@
 package dev.shrecked.feshchantments.items;
 
+import dev.shrecked.feshchantments.Feshchantments;
 import dev.shrecked.feshchantments.FeshchantmentsState;
 import dev.shrecked.feshchantments.PlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
@@ -15,13 +17,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static dev.shrecked.feshchantments.Feshchantments.UPDATE_ENCHANTMENTS;
 
@@ -39,6 +40,11 @@ public class ForgetScrollItem extends Item {
                         new ArrayList<>()
                 ))
         );
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.literal("i forgor \u2620").formatted(Formatting.GRAY));
     }
 
     @Override
@@ -91,6 +97,6 @@ public class ForgetScrollItem extends Item {
 
     @Override
     public SoundEvent getEatSound() {
-        return super.getEatSound();
+        return Feshchantments.WRITING_SOUND_EVENT;
     }
 }

@@ -1,5 +1,6 @@
 package dev.shrecked.feshchantments.items;
 
+import dev.shrecked.feshchantments.Feshchantments;
 import dev.shrecked.feshchantments.FeshchantmentsState;
 import dev.shrecked.feshchantments.PlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -128,6 +129,6 @@ public class ScrollItem extends Item {
 
     @Override
     public SoundEvent getEatSound() {
-        return super.getEatSound();
+        return Feshchantments.WRITING_SOUND_EVENT;
     }
 }
