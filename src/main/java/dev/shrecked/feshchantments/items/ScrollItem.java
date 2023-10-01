@@ -4,6 +4,7 @@ import dev.shrecked.feshchantments.FeshchantmentsState;
 import dev.shrecked.feshchantments.PlayerData;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,16 +14,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static dev.shrecked.feshchantments.Feshchantments.UPDATE_ENCHANTMENTS;
 import static dev.shrecked.feshchantments.Feshchantments.getEnchantName;
@@ -50,6 +50,19 @@ public class ScrollItem extends Item {
     public ScrollItem(Item.Settings settings, @Nullable Enchantment enchantment) {
         this(settings);
         this.enchantment = enchantment;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack1, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        if (stack1.getItem() instanceof ScrollItem stack) {
+            if (stack.enchantment == null) return;
+            tooltip.add(Text.translatable(stack.enchantment.getTranslationKey()).formatted(Formatting.GRAY));
+        }
+    }
+
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return true;
     }
 
     @Override
@@ -105,19 +118,16 @@ public class ScrollItem extends Item {
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        // https://github.com/SpongePowered/Mixin/issues/387
-        // maybe someday this might get resolved, and then I
-        // can do something about the eating sound effect.
-        //
-        // If it does get resolved, add a new field to the
-        // enum `UseAction` and then use a mixin to the
-        // `LivingEntity.triggerItemUseEffects` function to
-        // handle the new field and use a custom sound.
         return UseAction.EAT;
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
         return 80;
+    }
+
+    @Override
+    public SoundEvent getEatSound() {
+        return super.getEatSound();
     }
 }
