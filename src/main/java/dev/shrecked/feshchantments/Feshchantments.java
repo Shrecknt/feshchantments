@@ -112,32 +112,32 @@ public class Feshchantments implements ModInitializer {
             modifyTable(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "fire_aspect", 0.03);
             modifyTable(tableBuilder, id, EntityType.MAGMA_CUBE.getLootTableId(), "fire_protection", 0.05);
             modifyTable(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "flame", 0.03);
-            // fortune
-            // frost walker
-            // impaling
-            // infinity
-            // knockback
-            // looting
-            // loyalty
-            // luck of the sea
-            // lure
+            modifyTable(tableBuilder, id, EntityType.WITHER.getLootTableId(), "fortune", 1);
+            modifyTable(tableBuilder, id, EntityType.STRAY.getLootTableId(), "frost_walker", 0.032);
+            modifyTable(tableBuilder, id, EntityType.DROWNED.getLootTableId(), "impaling", 0.027);
+            modifyTable(tableBuilder, id, LootTables.JUNGLE_TEMPLE_DISPENSER_CHEST, "infinity", 0.6);
+            modifyTable(tableBuilder, id, EntityType.IRON_GOLEM.getLootTableId(), "knockback", 0.024);
+            modifyTable(tableBuilder, id, EntityType.WITHER_SKELETON.getLootTableId(), "looting", 0.02);
+            modifyTable(tableBuilder, id, EntityType.GUARDIAN.getLootTableId(), "loyalty", 0.08);
+            modifyTable(tableBuilder, id, EntityType.PUFFERFISH.getLootTableId(), "luck_of_the_sea", 0.2);
+            modifyTable(tableBuilder, id, EntityType.SALMON.getLootTableId(), "lure", 0.2);
             modifyTable(tableBuilder, id, LootTables.END_CITY_TREASURE_CHEST, "mending", 0.1);
-            // multishot
-            // piercing
-            // power
+            modifyTable(tableBuilder, id, LootTables.VILLAGE_FLETCHER_CHEST, "multishot", 0.2);
+            modifyTable(tableBuilder, id, EntityType.PILLAGER.getLootTableId(), "impaling", 0.027);
+            modifyTable(tableBuilder, id, EntityType.SKELETON.getLootTableId(), "power", 0.005);
             modifyTable(tableBuilder, id, EntityType.WANDERING_TRADER.getLootTableId(), "projectile_protection", 1);
-            // protection
+            modifyTable(tableBuilder, id, LootTables.ANCIENT_CITY_CHEST, "protection", 0.1);
             // punch
             // quick charge
             // respiration
-            // riptide
-            // sharpness
-            // silk touch
+            modifyTable(tableBuilder, id, EntityType.SQUID.getLootTableId(), "riptide", 0.01);
+            modifyTable(tableBuilder, id, Blocks.SPAWNER.getLootTableId(), "sharpness", 1);
+            modifyTable(tableBuilder, id, EntityType.ENDERMAN.getLootTableId(), "silk_touch", 0.01);
             // smite
-            // soul speed
-            // sweeping edge
-            // swift sneak
-            // thorns
+            modifyTable(tableBuilder, id, LootTables.BASTION_TREASURE_CHEST, "soul_speed", 0.5);
+            modifyTable(tableBuilder, id, LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY, "sweeping_edge", 0.1);
+            modifyTable(tableBuilder, id, EntityType.WARDEN.getLootTableId(), "swift_sneak", 1);
+            modifyTable(tableBuilder, id, EntityType.ELDER_GUARDIAN.getLootTableId(), "thorns", 1);
             modifyTable(tableBuilder, id, LootTables.VILLAGE_TOOLSMITH_CHEST, "unbreaking", 0.3);
         });
     }
