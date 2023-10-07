@@ -100,55 +100,54 @@ public class Feshchantments implements ModInitializer {
             // 1 where 0 means impossible to obtain
             // and 1 means guaranteed.
 
-            modifyTable(tableBuilder, id, LootTables.UNDERWATER_RUIN_SMALL_CHEST, "aqua_affinity", 0.3);
-            modifyTable(tableBuilder, id, EntityType.CAVE_SPIDER.getLootTableId(), "bane_of_arthropods", 0.005);
-            modifyTable(tableBuilder, id, EntityType.CREEPER.getLootTableId(), "blast_protection", 0.01);
-            modifyTable(tableBuilder, id, LootTables.UNDERWATER_RUIN_SMALL_CHEST, "channeling", 0.15);
-            modifyTable(tableBuilder, id, LootTables.PILLAGER_OUTPOST_CHEST, "curse_of_vanishing", 0.4);
-            modifyTable(tableBuilder, id, LootTables.PILLAGER_OUTPOST_CHEST, "curse_of_binding", 0.4);
-            modifyTable(tableBuilder, id, LootTables.UNDERWATER_RUIN_BIG_CHEST, "depth_strider", 0.2);
-            modifyTable(tableBuilder, id, LootTables.VILLAGE_MASON_CHEST, "efficiency", 0.3);
-            modifyTable(tableBuilder, id, LootTables.ANCIENT_CITY_ICE_BOX_CHEST, "feather_falling", 0.75);
-            modifyTable(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "fire_aspect", 0.03);
-            modifyTable(tableBuilder, id, EntityType.MAGMA_CUBE.getLootTableId(), "fire_protection", 0.05);
-            modifyTable(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "flame", 0.03);
-            modifyTable(tableBuilder, id, EntityType.WITHER.getLootTableId(), "fortune", 1);
-            modifyTable(tableBuilder, id, EntityType.STRAY.getLootTableId(), "frost_walker", 0.032);
-            modifyTable(tableBuilder, id, EntityType.DROWNED.getLootTableId(), "impaling", 0.027);
-            modifyTable(tableBuilder, id, LootTables.JUNGLE_TEMPLE_DISPENSER_CHEST, "infinity", 0.6);
-            modifyTable(tableBuilder, id, EntityType.IRON_GOLEM.getLootTableId(), "knockback", 0.024);
-            modifyTable(tableBuilder, id, EntityType.WITHER_SKELETON.getLootTableId(), "looting", 0.02);
-            modifyTable(tableBuilder, id, EntityType.GUARDIAN.getLootTableId(), "loyalty", 0.08);
-            modifyTable(tableBuilder, id, EntityType.PUFFERFISH.getLootTableId(), "luck_of_the_sea", 0.2);
-            modifyTable(tableBuilder, id, EntityType.SALMON.getLootTableId(), "lure", 0.2);
-            modifyTable(tableBuilder, id, LootTables.END_CITY_TREASURE_CHEST, "mending", 0.1);
-            modifyTable(tableBuilder, id, LootTables.VILLAGE_FLETCHER_CHEST, "multishot", 0.2);
-            modifyTable(tableBuilder, id, EntityType.PILLAGER.getLootTableId(), "impaling", 0.027);
-            modifyTable(tableBuilder, id, EntityType.SKELETON.getLootTableId(), "power", 0.005);
-            modifyTable(tableBuilder, id, EntityType.WANDERING_TRADER.getLootTableId(), "projectile_protection", 1);
-            modifyTable(tableBuilder, id, LootTables.ANCIENT_CITY_CHEST, "protection", 0.1);
+            addLootItem(tableBuilder, id, LootTables.UNDERWATER_RUIN_SMALL_CHEST, "aqua_affinity", 0.3);
+            addLootItem(tableBuilder, id, EntityType.CAVE_SPIDER.getLootTableId(), "bane_of_arthropods", 0.005);
+            addLootItem(tableBuilder, id, EntityType.CREEPER.getLootTableId(), "blast_protection", 0.01);
+            addLootItem(tableBuilder, id, LootTables.UNDERWATER_RUIN_SMALL_CHEST, "channeling", 0.15);
+            addLootItem(tableBuilder, id, LootTables.PILLAGER_OUTPOST_CHEST, "curse_of_vanishing", 0.4);
+            addLootItem(tableBuilder, id, LootTables.PILLAGER_OUTPOST_CHEST, "curse_of_binding", 0.4);
+            addLootItem(tableBuilder, id, LootTables.UNDERWATER_RUIN_BIG_CHEST, "depth_strider", 0.2);
+            addLootItem(tableBuilder, id, LootTables.VILLAGE_MASON_CHEST, "efficiency", 0.3);
+            addLootItem(tableBuilder, id, LootTables.ANCIENT_CITY_ICE_BOX_CHEST, "feather_falling", 0.75);
+            addLootItem(tableBuilder, id, EntityType.BLAZE.getLootTableId(), "fire_aspect", 1);
+            addLootItem(tableBuilder, id, EntityType.MAGMA_CUBE.getLootTableId(), "fire_protection", 0.05);
+            addLootItem(tableBuilder, id, EntityType.STRIDER.getLootTableId(), "flame", 0.03);
+            addLootItem(tableBuilder, id, EntityType.WITHER.getLootTableId(), "fortune", 1);
+            addLootItem(tableBuilder, id, EntityType.STRAY.getLootTableId(), "frost_walker", 0.032);
+            addLootItem(tableBuilder, id, EntityType.DROWNED.getLootTableId(), "impaling", 0.027);
+            addLootItem(tableBuilder, id, LootTables.JUNGLE_TEMPLE_DISPENSER_CHEST, "infinity", 0.6);
+            addLootItem(tableBuilder, id, EntityType.IRON_GOLEM.getLootTableId(), "knockback", 0.024);
+            addLootItem(tableBuilder, id, EntityType.WITHER_SKELETON.getLootTableId(), "looting", 0.02);
+            addLootItem(tableBuilder, id, EntityType.GUARDIAN.getLootTableId(), "loyalty", 0.08);
+            addLootItem(tableBuilder, id, EntityType.PUFFERFISH.getLootTableId(), "luck_of_the_sea", 0.2);
+            addLootItem(tableBuilder, id, EntityType.SALMON.getLootTableId(), "lure", 0.2);
+            addLootItem(tableBuilder, id, LootTables.END_CITY_TREASURE_CHEST, "mending", 0.1);
+            addLootItem(tableBuilder, id, LootTables.VILLAGE_FLETCHER_CHEST, "multishot", 0.2);
+            addLootItem(tableBuilder, id, EntityType.PILLAGER.getLootTableId(), "impaling", 0.027);
+            addLootItem(tableBuilder, id, EntityType.SKELETON.getLootTableId(), "power", 0.005);
+            addLootItem(tableBuilder, id, EntityType.WANDERING_TRADER.getLootTableId(), "projectile_protection", 1);
+            addLootItem(tableBuilder, id, LootTables.ANCIENT_CITY_CHEST, "protection", 0.1);
             // punch
             // quick charge
             // respiration
-            modifyTable(tableBuilder, id, EntityType.SQUID.getLootTableId(), "riptide", 0.01);
-            modifyTable(tableBuilder, id, Blocks.SPAWNER.getLootTableId(), "sharpness", 1);
-            modifyTable(tableBuilder, id, EntityType.ENDERMAN.getLootTableId(), "silk_touch", 0.01);
+            addLootItem(tableBuilder, id, EntityType.SQUID.getLootTableId(), "riptide", 0.01);
+            addLootItem(tableBuilder, id, Blocks.SPAWNER.getLootTableId(), "sharpness", 1);
+            addLootItem(tableBuilder, id, EntityType.ENDERMAN.getLootTableId(), "silk_touch", 0.01);
             // smite
-            modifyTable(tableBuilder, id, LootTables.BASTION_TREASURE_CHEST, "soul_speed", 0.5);
-            modifyTable(tableBuilder, id, LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY, "sweeping_edge", 0.1);
-            modifyTable(tableBuilder, id, EntityType.WARDEN.getLootTableId(), "swift_sneak", 1);
-            modifyTable(tableBuilder, id, EntityType.ELDER_GUARDIAN.getLootTableId(), "thorns", 1);
-            modifyTable(tableBuilder, id, LootTables.VILLAGE_TOOLSMITH_CHEST, "unbreaking", 0.3);
+            addLootItem(tableBuilder, id, LootTables.BASTION_TREASURE_CHEST, "soul_speed", 0.5);
+            modifyTable(tableBuilder, id, LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY, "sweeping_edge", 2);
+            addLootItem(tableBuilder, id, EntityType.WARDEN.getLootTableId(), "swift_sneak", 1);
+            addLootItem(tableBuilder, id, EntityType.ELDER_GUARDIAN.getLootTableId(), "thorns", 1);
+            addLootItem(tableBuilder, id, LootTables.VILLAGE_TOOLSMITH_CHEST, "unbreaking", 0.3);
         });
     }
 
-    public static void modifyTable(LootTable.Builder tableBuilder, Identifier id, Identifier lootTable, String enchantName, double chance) {
+    public static void addLootItem(LootTable.Builder tableBuilder, Identifier id, Identifier lootTable, String enchantName, double chance) {
         if (lootTable.equals(id)) {
-            LootPool.Builder poolBuilder = LootPool.builder()
-                .with(ItemEntry.builder(CUSTOM_ITEM_MAP.get(enchantName)));
+            ItemEntry.Builder<?> entry = ItemEntry.builder(CUSTOM_ITEM_MAP.get(enchantName));
 
             if (chance < 1) {
-                poolBuilder = poolBuilder.conditionally(new LootCondition() {
+                entry.conditionally(() -> new LootCondition() {
                     @Override
                     public LootConditionType getType() {
                         return LootConditionTypes.RANDOM_CHANCE;
@@ -161,7 +160,15 @@ public class Feshchantments implements ModInitializer {
                 });
             }
 
-            tableBuilder.pool(poolBuilder);
+            tableBuilder.pool(LootPool.builder().with(entry));
+        }
+    }
+
+    public static void modifyTable(LootTable.Builder tableBuilder, Identifier id, Identifier lootTable, String enchantName, int weight) {
+        if (lootTable.equals(id)) {
+            tableBuilder.modifyPools((LootPool.Builder modifier) -> {
+                modifier.with(ItemEntry.builder(CUSTOM_ITEM_MAP.get(enchantName)).weight(weight));
+            });
         }
     }
 
